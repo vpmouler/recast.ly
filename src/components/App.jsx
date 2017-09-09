@@ -1,9 +1,10 @@
 
 class App extends React.Component {
-  constructor (prop) {
-    super(prop);
+  constructor () {
+    super();
     this.state = {
-      selected: prop.videos[0]
+      selected: exampleVideoData[0],
+      data: exampleVideoData
     }; 
   }
 
@@ -15,8 +16,18 @@ class App extends React.Component {
   }
 
   handleSearch (e) {
-    console.log('search event', e.target.value);
-    searchYoutube
+    console.log('this', this);
+    searchYouTube(e.target.value, this.changeProp.bind(this));
+    
+  }
+
+  changeProp (data) {
+    this.setState({
+      selected: data[0],
+      data: data
+    });
+    console.log('this.props.videos', this.props.videos);
+    console.log('this.state.selected', this.state.selected);
   }
 
   render () {
@@ -24,7 +35,7 @@ class App extends React.Component {
       <div>
         <nav className="navbar">
           <div className="col-md-6 offset-md-3">
-            <Search onSearch={this.handleSearch}/>
+            <Search onSearch={this.handleSearch.bind(this)}/>
           </div>
         </nav>
         <div className="row">
@@ -33,7 +44,7 @@ class App extends React.Component {
           </div>
           <div className="col-md-5">
             <VideoList 
-              videos={this.props.videos}
+              videos={this.state.data}
               onClickVideo={this.handleClick} />
           </div>
         </div>
