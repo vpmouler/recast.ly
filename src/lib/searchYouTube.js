@@ -1,9 +1,10 @@
-var searchYouTube = (options, callback) => {
+var searchYouTube = (options = 'cats', callback) => {
   var searchResult = $.ajax({
     type: 'GET',
     // url: `https://www.googleapis.com/youtube/v3/search?part=snippet&order=rating&type=video&videoDefinition=high&videoEmbeddable=true&key=${window.YOUTUBE_API_KEY}&q=${options}`
     url: 'https://www.googleapis.com/youtube/v3/search',
     data: {
+      q: options,
       part: 'snippet',
       type: 'video',
       videoDefinition: 'high',
@@ -14,7 +15,6 @@ var searchYouTube = (options, callback) => {
   });
 
   searchResult.done((data) => {
-    // console.log('SUCCESS', data.items);
     callback(data.items);
   });
 

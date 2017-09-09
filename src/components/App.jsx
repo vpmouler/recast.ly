@@ -1,33 +1,28 @@
 
 class App extends React.Component {
-  constructor () {
-    super();
+  constructor (prop) {
+    super(prop);
     this.state = {
-      selected: exampleVideoData[0],
-      data: exampleVideoData
+      selected: this.props.videos[0],
+      data: this.props.videos
     }; 
   }
 
-  handleClick (e) {
-    console.log('click event', e);
-    // this.setState({
-    //   selected: e.target
-    // });
+  handleClick (selectedVideo) {
+    this.setState({
+      selected: selectedVideo
+    });
   }
 
   handleSearch (e) {
-    console.log('this', this);
-    searchYouTube(e.target.value, this.changeProp.bind(this));
-    
+    searchYouTube(e.target.value, this.resetState.bind(this));
   }
 
-  changeProp (data) {
+  resetState (data) {
     this.setState({
       selected: data[0],
       data: data
     });
-    console.log('this.props.videos', this.props.videos);
-    console.log('this.state.selected', this.state.selected);
   }
 
   render () {
@@ -45,7 +40,7 @@ class App extends React.Component {
           <div className="col-md-5">
             <VideoList 
               videos={this.state.data}
-              onClickVideo={this.handleClick} />
+              onClickVideo={this.handleClick.bind(this)} />
           </div>
         </div>
       </div>      
